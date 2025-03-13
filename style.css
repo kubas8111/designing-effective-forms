@@ -1,3 +1,41 @@
 .modal {
     background: #c6d0ff7a;
 }
+
+.container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    height: 100vh; /* Ograniczamy wysokość kontenera na 100% wysokości viewportu */
+    overflow-y: auto; /* Dodajemy przewijanie, jeśli zawartość przekroczy ekran */
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    padding-bottom: 20px; /* Dodajemy przestrzeń na dole formularza */
+}
+
+
+/* Dostosowanie dla elementów formularza, aby dobrze wyglądały w jednej kolumnie */
+.mb-3 {
+    margin-bottom: 1.2rem;
+}
+
+.form-check {
+    margin-bottom: 0.5rem;
+}
+
+.btn {
+    margin-top: 1.5rem;
+}
+
+/* Można dostosować wysokość na różnych urządzeniach */
+@media (max-width: 576px) {
+    .container {
+        padding-top: 10px;
+        padding-bottom: 10px;
+    }
+}

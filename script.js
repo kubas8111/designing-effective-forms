@@ -10,6 +10,26 @@ function handleClick() {
     clicksInfo.innerText = clickCount;
 }
 
+document.addEventListener('DOMContentLoaded', function () {
+    const myForm = document.getElementById('form');
+
+    myForm.addEventListener('keydown', function (event) {
+        if (event.key === 'Enter') {
+            event.preventDefault();
+            myForm.submit();
+        }
+    });
+
+    document.addEventListener('keydown', function (event) {
+        if (event.key === 'Escape') {
+            event.preventDefault();
+            myForm.reset();
+            console.log('Formularz zresetowany');
+        }
+    });
+});
+
+
 async function fetchAndFillCountries() {
     try {
         const response = await fetch('https://restcountries.com/v3.1/all');
@@ -29,7 +49,14 @@ function getCountryByIP() {
         .then(response => response.json())
         .then(data => {
             const country = data.country;
-            // TODO inject country to form and call getCountryCode(country) function
+            const countryInput = document.getElementById('country');
+
+            if (countryInput) {
+                const option = [...countryInput.options].find(opt => opt.value === country);
+                if (option) option.selected = true;
+            }
+
+            getCountryCode(country);
         })
         .catch(error => {
             console.error('Błąd pobierania danych z serwera GeoJS:', error);
@@ -48,7 +75,12 @@ function getCountryCode(countryName) {
     })
     .then(data => {        
         const countryCode = data[0].idd.root + data[0].idd.suffixes.join("")
-        // TODO inject countryCode to form
+        const countryCodeInput = document.getElementById('countryCode');
+
+            if (countryCodeInput) {
+                const option = [...countryCodeInput.options].find(opt => opt.value === countryCode);
+                if (option) option.selected = true;
+            }
     })
     .catch(error => {
         console.error('Wystąpił błąd:', error);
@@ -61,4 +93,6 @@ function getCountryCode(countryName) {
     document.addEventListener('click', handleClick);
 
     fetchAndFillCountries();
+
+    getCountryByIP();
 })()
